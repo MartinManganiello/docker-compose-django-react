@@ -1,4 +1,5 @@
-FROM python:3.8
+FROM python:latest
+ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -7,7 +8,8 @@ RUN apt-get update \
 
 WORKDIR /app/api
 COPY requirements.txt /app/api
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip -r requirements.txt
+COPY . /app/api
 
 EXPOSE 8000
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
